@@ -1,10 +1,19 @@
 package com.something.cube;
 
 import com.something.cube.CubeFace.*;
+import java.util.HashMap;
 
 public class SolveFirstFace{
+	private static HashMap<String, Position> possibleMiddle = new HashMap<String, Position>();
+	static {
+		possibleMiddle.put("0,1", Position.TOP);
+		possibleMiddle.put("1,0", Position.LEFT);
+		possibleMiddle.put("1,2", Position.RIGHT);
+		possibleMiddle.put("2,1", Position.BOTTOM);
+	}
+
     public static void solve(Cube masterCube, CubeFace currentFace){
-        Color currentColor = currentFace.get(1, 1);
+        Color currentColor = currentFace.getColor(1, 1);
         while(!doneFace(currentFace)){
             CubeFace topFace = currentFace.getFace(Position.TOP);
             Color topColor = topFace.getColor(1, 1);
@@ -14,8 +23,21 @@ public class SolveFirstFace{
             Color rightColor = rightFace.getColor(1, 1);
             CubeFace leftFace = currentFace.getFace(Position.LEFT);
             Color leftColor = leftFace.getColor(1, 1);
+			searchMiddlePiece(currentFace, currentColor, topColor);
         }
     }
+
+	private static String searchMiddlePiece(CubeFace currentFace, Color baseColor, Color otherColor){
+		for(String possibleString : possibleMiddle.keySet()){
+			String splitArray[] = possibleString.split(",");
+			if(baseColor == currentFace.getColor(Integer.parseInt(splitArray[0]), Integer.parseInt(splitArray[1]))){
+				if(otherColor == currentFace.getFace(possibleMiddle.get(possibleString)).getSide(currentFace)[1]){
+					return possibleString;
+				}
+			}
+		}
+		return null;
+	}
 
     private static Boolean doneFace(CubeFace currentFace){
         for(int i=0; i<3; i++)
