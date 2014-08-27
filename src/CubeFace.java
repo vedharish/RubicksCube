@@ -49,6 +49,7 @@ class CubeFace{
         contentMatrix[x_index][y_index] = color;
     }
     public void rotateClock(){
+        System.out.println("Rotate "+this);
         Color tempColor = contentMatrix[0][0];
         contentMatrix[0][0] = contentMatrix[2][0];
         contentMatrix[2][0] = contentMatrix[2][2];
@@ -103,7 +104,6 @@ class CubeFace{
                 cubeFacePosition = tempPosition;
                 break;
             }
-        System.out.println("SET SIDE -- "+cubeFace+" -- position -- "+cubeFacePosition);
         switch(cubeFacePosition){
             case LEFT:
                 contentMatrix[0][0] = setColorArray[0];
