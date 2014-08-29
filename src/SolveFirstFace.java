@@ -15,6 +15,7 @@ public class SolveFirstFace{
     public static void solve(Cube masterCube, CubeFace currentFace){
         Color currentColor = currentFace.getColor(1, 1);
         while(!doneFace(currentFace)){
+			System.out.println("The face is not Done!!");
             CubeFace topFace = currentFace.getFace(Position.TOP);
             Color topColor = topFace.getColor(1, 1);
             CubeFace bottomFace = currentFace.getFace(Position.BOTTOM);
@@ -71,80 +72,119 @@ public class SolveFirstFace{
 					solveMiddlePiece(baseFace, x_base, y_base, otherFace, x_other, y_other, baseColor, otherColor);
                 }
             }else if(null != (searchString = searchMiddlePiece(baseFace.getFace(Position.TOP), baseColor, otherColor))){
-                String[] searchSplitArray = searchString.split(",");
-				if(x_base == 1 && searchSplitArray[0] == "1"){
-					if(y_base == 0 && searchSplitArray[1] == "0"){
-						baseFace.getFace(Position.LEFT).rotateClock();
-					}else if(y_base == 2 && searchSplitArray[1] == "2"){
-						baseFace.getFace(Position.RIGHT).rotateClock();
-						baseFace.getFace(Position.RIGHT).rotateClock();
-						baseFace.getFace(Position.RIGHT).rotateClock();
-					}else if(y_base == 0 && searchSplitArray[1] == "2"){
-						baseFace.getFace(Position.RIGHT).rotateClock();
-						baseFace.getFace(Position.BACK).rotateClock();
-						baseFace.getFace(Position.BACK).rotateClock();
-						baseFace.getFace(Position.LEFT).rotateClock();
-						baseFace.getFace(Position.LEFT).rotateClock();
-					}else if(y_base == 2 && searchSplitArray[1] == "0"){
-						baseFace.getFace(Position.LEFT).rotateClock();
-						baseFace.getFace(Position.LEFT).rotateClock();
-						baseFace.getFace(Position.LEFT).rotateClock();
-						baseFace.getFace(Position.BACK).rotateClock();
-						baseFace.getFace(Position.BACK).rotateClock();
-						baseFace.getFace(Position.RIGHT).rotateClock();
-						baseFace.getFace(Position.RIGHT).rotateClock();
-					}
-				}else if(x_base == 1 && y_base == 0){
-					if(searchSplitArray[0] == "2"){
-						baseFace.getFace(Position.TOP).rotateClock();
-						baseFace.getFace(Position.TOP).rotateClock();
-					}
-					baseFace.getFace(Position.TOP).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-					baseFace.getFace(Position.LEFT).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-				}else if(x_base == 1 && y_base == 2){
-					if(searchSplitArray[0] == "2"){
-						baseFace.getFace(Position.TOP).rotateClock();
-						baseFace.getFace(Position.TOP).rotateClock();
-					}
-					baseFace.getFace(Position.TOP).rotateClock();
+
+            }else if(null != (searchString = searchMiddlePiece(baseFace.getFace(Position.RIGHT), baseColor, otherColor))){
+				if(searchString.equals("1,0")){
 					baseFace.getFace(Position.RIGHT).rotateClock();
 					baseFace.getFace(Position.RIGHT).rotateClock();
-					baseFace.getFace(Position.RIGHT).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-				}else if(x_base == 0){
-					if(searchSplitArray[1].equals("0")){
-						baseFace.getFace(Position.TOP).rotateClock();
-					}else if(searchSplitArray[1].equals("2")){
-						baseFace.getFace(Position.TOP).rotateClock();
-						baseFace.getFace(Position.TOP).rotateClock();
-						baseFace.getFace(Position.TOP).rotateClock();
-					}else if(searchSplitArray[0].equals("2")){
-						baseFace.getFace(Position.TOP).rotateClock();
-						baseFace.getFace(Position.TOP).rotateClock();
-					}
-					baseFace.getFace(Position.BACK).rotateClock();
-					baseFace.getFace(Position.LEFT).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-					baseFace.getFace(Position.TOP).rotateClock();
-					baseFace.getFace(Position.LEFT).rotateClock();
-					baseFace.getFace(Position.LEFT).rotateClock();
-					baseFace.getFace(Position.LEFT).rotateClock();
-				}else if(x_base == 2){
-					if(searchSplitArray[0].equals("2")){
-						baseFace.getFace(Position.TOP).rotateClock();
-					}
-					baseFace.rotateClock();
-					baseFace.rotateClock();
 				}
+            }else if(null != (searchString = searchMiddlePiece(baseFace.getFace(Position.BOTTOM), baseColor, otherColor))){
+            }else if(null != (searchString = searchMiddlePiece(baseFace.getFace(Position.LEFT), baseColor, otherColor))){
 			}
         }
     }
+
+	private static void solveMiddleFromAFace(String searchString, CubeFace searchFace,
+											 CubeFace antiClockSearchFace, CubeFace clockSearchFace, CubeFace oppSearchFace){
+			String[] searchSplitArray = searchString.split(",");
+			if(x_base == 1 && searchSplitArray[0] == "1"){
+				if(y_base == 0 && searchSplitArray[1] == "0"){
+					baseFace.getFace(Position.LEFT).rotateClock();
+				}else if(y_base == 2 && searchSplitArray[1] == "2"){
+					baseFace.getFace(Position.RIGHT).rotateClock();
+					baseFace.getFace(Position.RIGHT).rotateClock();
+					baseFace.getFace(Position.RIGHT).rotateClock();
+				}else if(y_base == 0 && searchSplitArray[1] == "2"){
+					baseFace.getFace(Position.RIGHT).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.LEFT).rotateClock();
+					baseFace.getFace(Position.LEFT).rotateClock();
+				}else if(y_base == 2 && searchSplitArray[1] == "0"){
+					baseFace.getFace(Position.LEFT).rotateClock();
+					baseFace.getFace(Position.LEFT).rotateClock();
+					baseFace.getFace(Position.LEFT).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.RIGHT).rotateClock();
+					baseFace.getFace(Position.RIGHT).rotateClock();
+				}
+			}else if(x_base == 1 && y_base == 0){
+				if(searchSplitArray[0] == "2"){
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+				}
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+			}else if(x_base == 1 && y_base == 2){
+				if(searchSplitArray[0] == "2"){
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+				}
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.RIGHT).rotateClock();
+				baseFace.getFace(Position.RIGHT).rotateClock();
+				baseFace.getFace(Position.RIGHT).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+			}else if(x_base == 0){
+				if(searchSplitArray[1].equals("0")){
+					baseFace.getFace(Position.TOP).rotateClock();
+				}else if(searchSplitArray[1].equals("2")){
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+				}else if(searchSplitArray[0].equals("2")){
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+				}
+				baseFace.getFace(Position.BACK).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.TOP).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+			}else if(x_base == 2){
+				if(searchSplitArray[0].equals("2")){
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+				}else if(searchSplitArray[0].equals("1") && searchSplitArray[1].equals("0")){
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+				}else if(searchSplitArray[0].equals("1") && searchSplitArray[1].equals("2")){
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.BACK).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+					baseFace.getFace(Position.TOP).rotateClock();
+				}
+				baseFace.getFace(Position.BACK).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+				baseFace.getFace(Position.BOTTOM).rotateClock();
+				baseFace.getFace(Position.LEFT).rotateClock();
+			}
+	}
 
     private static String searchMiddlePiece(CubeFace currentFace, Color baseColor, Color otherColor){
         for(String possibleString : possibleMiddle.keySet()){
