@@ -25,6 +25,13 @@ public class SolveFirstFace{
             CubeFace leftFace = currentFace.getFace(Position.LEFT);
             Color leftColor = leftFace.getColor(1, 1);
             solveMiddlePiece(currentFace, 0, 1, topFace, 2, 1, currentColor, topColor);
+			System.out.println("Solved 1");
+            solveMiddlePiece(currentFace, 1, 0, leftFace, 1, 2, currentColor, leftColor);
+			System.out.println("Solved 2");System.exit(0);
+            solveMiddlePiece(currentFace, 1, 2, rightFace, 1, 0, currentColor, rightColor);
+			System.out.println("Solved 3");
+            solveMiddlePiece(currentFace, 2, 1, bottomFace, 0, 1, currentColor, bottomColor);
+			System.out.println("Solved 4");
 			break;
         }
     }
@@ -85,6 +92,14 @@ public class SolveFirstFace{
 				solveMiddleFromAFace(baseFace.getFace(Position.RIGHT), baseFace.getFace(Position.TOP), baseFace.getFace(Position.BOTTOM),
 									 baseFace.getFace(Position.LEFT), baseFace.getFace(Position.BACK), new int[]{2-y_base, x_base}, searchSplitArray);
             }else if(null != (searchString = searchMiddlePiece(baseFace.getFace(Position.BOTTOM), baseColor, otherColor))){
+				System.out.println("SEARCH STRING "+searchString);
+				String[] searchSplitArray = searchString.split(",");
+				String tempString = searchSplitArray[1];
+				searchSplitArray[0] = ""+(2-Integer.parseInt(searchSplitArray[0]));
+				searchSplitArray[1] = ""+(2-Integer.parseInt(tempString));
+				System.out.println("SEARCH STRING Array "+searchSplitArray[0]+searchSplitArray[1]);
+				solveMiddleFromAFace(baseFace.getFace(Position.BOTTOM), baseFace.getFace(Position.LEFT), baseFace.getFace(Position.RIGHT),
+									 baseFace.getFace(Position.TOP), baseFace.getFace(Position.BACK), new int[]{2-x_base, 2-y_base}, searchSplitArray);
             }else if(null != (searchString = searchMiddlePiece(baseFace.getFace(Position.LEFT), baseColor, otherColor))){
 				String[] searchSplitArray = searchString.split(",");
 				String tempString = searchSplitArray[0];
@@ -92,7 +107,10 @@ public class SolveFirstFace{
 				searchSplitArray[1] = ""+(2-Integer.parseInt(tempString));
 				solveMiddleFromAFace(baseFace.getFace(Position.LEFT), baseFace.getFace(Position.BOTTOM), baseFace.getFace(Position.TOP),
 									 baseFace.getFace(Position.RIGHT), baseFace.getFace(Position.BACK), new int[]{y_base, 2-x_base}, searchSplitArray);
-            }
+            }else{
+				System.out.println("WORK!!!!!!!!!!!");
+				System.exit(0);
+			}
         }
     }
 
@@ -199,7 +217,6 @@ public class SolveFirstFace{
 			oppSearchFace.rotateClock();
 			clockSearchFace.rotateClock();
 		}
-		System.exit(0);
     }
 
     private static String searchMiddlePiece(CubeFace currentFace, Color baseColor, Color otherColor){
